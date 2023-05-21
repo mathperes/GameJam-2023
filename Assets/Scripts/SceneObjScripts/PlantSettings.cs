@@ -9,14 +9,21 @@ public class PlantSettings : MonoBehaviour
     private StatusController statusControl;
     private TimerController timerControl;
 
+    public SpriteRenderer plantaViva;
+    public SpriteRenderer plantaMorta;
+
     private bool onArea = false;
-    [SerializeField]private float timeAdd = 20;
+    [SerializeField] private float timeAdd = 20;
 
     public TextMeshProUGUI textEnter;
+
+    private AudioSource plantSource;
+    public AudioClip notSound;
 
     // Start is called before the first frame update
     void Start()
     {
+        plantSource = GetComponent<AudioSource>();
         areaEnter = GetComponent<BoxCollider>();
         statusControl = GameObject.Find("GameManager").GetComponent<StatusController>();
         timerControl = GameObject.Find("GameManager").GetComponent<TimerController>();
@@ -30,20 +37,42 @@ public class PlantSettings : MonoBehaviour
         {
             StartCoroutine(ColhendoCountdown());
         }
-
+        
         if (Input.GetKeyDown(KeyCode.E) && onArea && statusControl.withWater)
         {
-            timerControl.timePlant += timeAdd;
-            if (timerControl.timePlant >= timerControl.plantSlider.maxValue)
-            {
-                timerControl.timePlant = timerControl.plantSlider.maxValue;
-            }
+            StartCoroutine(RegandoCountdown());
+        }
+        
 
-            statusControl.withWater = false;
-            statusControl.withObj = false;
-            textEnter.gameObject.SetActive(false);
-        }      
+        if (timerControl.timePlant <= 0)
+        {
+            plantaViva.gameObject.SetActive(false);
+            plantaMorta.gameObject.SetActive(true);
 
+        }
+    }
+
+    void Regando()
+    {
+        timerControl.timePlant += timeAdd;
+        if (timerControl.timePlant >= timerControl.plantSlider.maxValue)
+        {
+            timerControl.timePlant = timerControl.plantSlider.maxValue;
+        }
+
+        statusControl.withWater = false;
+        statusControl.withObj = false;
+        statusControl.comAgua.gameObject.SetActive(false);
+        textEnter.text = "Pronto";
+    }
+
+    IEnumerator RegandoCountdown()
+    {
+        PlayerController.canMove = false;
+        textEnter.text = "Regando";
+        yield return new WaitForSeconds(2);
+        PlayerController.canMove = true;
+        Regando();
     }
 
     void Colhendo()
@@ -52,13 +81,13 @@ public class PlantSettings : MonoBehaviour
         statusControl.withObj = true;
         statusControl.comComida.gameObject.SetActive(true);
         textEnter.text = "Pronto";
-    } 
+    }
 
     IEnumerator ColhendoCountdown()
     {
         PlayerController.canMove = false;
         textEnter.text = "Colhendo";
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         PlayerController.canMove = true;
         Colhendo();
     }
@@ -77,7 +106,7 @@ public class PlantSettings : MonoBehaviour
             {
                 textEnter.text = "E para interagir com as plantas";
             }
-            
+
             onArea = true;
         }
     }

@@ -15,12 +15,18 @@ public class WorkbenchSettings : MonoBehaviour
     public TextMeshProUGUI textEnter;
     public SpriteRenderer bancadaComComida;
     public SpriteRenderer bancadaSemComida;
+    public SpriteRenderer bancadaSuja;
+
+    private AudioSource bancadaSource;
+    public AudioClip comendoSound;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         areaEnter = GetComponent<BoxCollider>();
+        bancadaSource = GetComponent<AudioSource>();
         statusControl = GameObject.Find("GameManager").GetComponent<StatusController>();
         timerControl = GameObject.Find("GameManager").GetComponent<TimerController>();
     }
@@ -34,6 +40,8 @@ public class WorkbenchSettings : MonoBehaviour
             statusControl.withTrash = true;
             statusControl.withObj = true;
             trashOnTable = false;
+            bancadaSuja.gameObject.SetActive(false);
+            bancadaSemComida.gameObject.SetActive(true);
             statusControl.comLixo.gameObject.SetActive(true);
             textEnter.gameObject.SetActive(false);
         }
@@ -43,6 +51,15 @@ public class WorkbenchSettings : MonoBehaviour
             StartCoroutine(PreparandoComidaCountdown());
         }
 
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            statusControl.withObj = false;
+            statusControl.withWater = false;
+            statusControl.withFood = false;
+
+            statusControl.comAgua.gameObject.SetActive(false);
+            statusControl.comComida.gameObject.SetActive(false);
+        }
     }
 
     void PreparandoComida()
@@ -66,8 +83,14 @@ public class WorkbenchSettings : MonoBehaviour
     {
         PlayerController.canMove = false;
         textEnter.text = "Preparando comida";
+        bancadaSource.PlayOneShot(comendoSound);
+        bancadaComComida.gameObject.SetActive(true);
+        bancadaSemComida.gameObject.SetActive(false);
         yield return new WaitForSeconds(3);
         PreparandoComida();
+        bancadaSource.Stop();
+        bancadaComComida.gameObject.SetActive(false);
+        bancadaSuja.gameObject.SetActive(true);
         PlayerController.canMove = true;
     }
 

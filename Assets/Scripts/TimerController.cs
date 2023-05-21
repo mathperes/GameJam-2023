@@ -44,9 +44,18 @@ public class TimerController : MonoBehaviour
     public float timeTrash;
     public float timePlant;
 
+    [Header("Sounds")]
+
+    public AudioClip alarmSound;
+
+    private AudioSource timerSource;
+    private bool alarmOn = false;
+    
+
     // Start is called before the first frame update
     void Start()
     {
+        timerSource = GetComponent<AudioSource>();
         trashSet = GameObject.Find("AreaLixo").GetComponent<TrashSettings>();
 
         sleepSlider.maxValue = sleepTimer;
@@ -81,7 +90,7 @@ public class TimerController : MonoBehaviour
             OxigenTimer(-1);
         }
 
-        if (trashSet.trashAmount >= 1)
+        if (trashSet.trashAmount >= 3)
         {
             TrashTimer(1);
         }
@@ -89,6 +98,19 @@ public class TimerController : MonoBehaviour
         {
             TrashTimer(-1);
         }
+
+        if (timeSleep <= 10 || timeHungry <= 10 || timeOxigen <= 10 || timeTrash <= 10 || timePlant < 10 && !alarmOn)
+        {
+            alarmOn = true;
+            StartCoroutine(AlarmeCountdown());
+        }
+    }
+
+    IEnumerator AlarmeCountdown()
+    {
+        timerSource.PlayOneShot(alarmSound);
+        yield return new WaitForSeconds(alarmSound.length);
+        alarmOn = false;
     }
 
     void SetEarthSprite(SpriteRenderer sprite)

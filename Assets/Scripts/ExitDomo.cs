@@ -6,15 +6,20 @@ using TMPro;
 public class ExitDomo : MonoBehaviour
 {
     private BoxCollider exitArea;
+    private AudioSource doorSource;
 
     public GameObject player;
     public TextMeshProUGUI textEnter;
+
+    [Header("Sound clip")]
+    public AudioClip doorSound;
 
     [SerializeField] private bool onExitArea = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        doorSource = GetComponent<AudioSource>();
         onExitArea = GetComponent<BoxCollider>();
         onExitArea = false;
     }
@@ -24,7 +29,9 @@ public class ExitDomo : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && onExitArea)
         {
+            doorSource.PlayOneShot(doorSound);
             player.transform.position = new Vector3(0.5f, 0.6f, 0);
+            PlayerController.onDomo = false;
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -42,7 +49,7 @@ public class ExitDomo : MonoBehaviour
             onExitArea = true;
             textEnter.text = "E para sair";
         }
-        
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -53,6 +60,6 @@ public class ExitDomo : MonoBehaviour
             textEnter.gameObject.SetActive(false);
             onExitArea = false;
         }
-        
+
     }
 }

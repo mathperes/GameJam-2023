@@ -8,7 +8,9 @@ public class ButtonSettings : MonoBehaviour
     private BoxCollider areaEnter;
 
     public TextMeshProUGUI textEnter;
+    public GameObject panelAviso;
 
+    private bool onArea = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,10 @@ public class ButtonSettings : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.E) && onArea)
+        {
+            panelAviso.gameObject.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,6 +32,7 @@ public class ButtonSettings : MonoBehaviour
         {
             Debug.Log("Entrou na area");
             textEnter.gameObject.SetActive(true);
+            onArea = true;
             textEnter.text = "E para interagir com o botão";
         }
     }
@@ -36,6 +42,7 @@ public class ButtonSettings : MonoBehaviour
         if (other.gameObject)
         {
             textEnter.gameObject.SetActive(false);
+            onArea = false;
             Debug.Log("Saiu da area");
         }
     }

@@ -6,15 +6,20 @@ using TMPro;
 public class EnterDomo : MonoBehaviour
 {
     private BoxCollider enterArea;
+    private AudioSource doorSource;
 
     public GameObject player;
     public TextMeshProUGUI textEnter;
 
-    [SerializeField]private bool onEnterArea = false;
+    [Header("Sound clip")]
+    public AudioClip doorSound;
+
+    [SerializeField] private bool onEnterArea = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        doorSource = GetComponent<AudioSource>();
         onEnterArea = GetComponent<BoxCollider>();
         onEnterArea = false;
     }
@@ -24,7 +29,9 @@ public class EnterDomo : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && onEnterArea)
         {
+            doorSource.PlayOneShot(doorSound);
             player.transform.position = new Vector3(-2.5f, 0.6f, 6);
+            PlayerController.onDomo = true;
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -42,7 +49,7 @@ public class EnterDomo : MonoBehaviour
             onEnterArea = true;
             textEnter.text = "E para entrar";
         }
-        
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -53,6 +60,6 @@ public class EnterDomo : MonoBehaviour
             textEnter.gameObject.SetActive(false);
             onEnterArea = false;
         }
-        
+
     }
 }
