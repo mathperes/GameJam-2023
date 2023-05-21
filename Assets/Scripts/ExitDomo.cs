@@ -16,6 +16,7 @@ public class ExitDomo : MonoBehaviour
     void Start()
     {
         onExitArea = GetComponent<BoxCollider>();
+        onExitArea = false;
     }
 
     // Update is called once per frame
@@ -25,20 +26,33 @@ public class ExitDomo : MonoBehaviour
         {
             player.transform.position = new Vector3(0.5f, 0.6f, 0);
         }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            onExitArea = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("entrou na area de entrada");
-        textEnter.gameObject.SetActive(true);
-        onExitArea = true;
-        textEnter.text = "E para sair";
+        if (other.gameObject)
+        {
+            Debug.Log("entrou na area de entrada");
+            textEnter.gameObject.SetActive(true);
+            onExitArea = true;
+            textEnter.text = "E para sair";
+        }
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("saiu da area de entrada");
-        textEnter.gameObject.SetActive(false);
-        onExitArea = false;
+        if (other.gameObject)
+        {
+            Debug.Log("saiu da area de entrada");
+            textEnter.gameObject.SetActive(false);
+            onExitArea = false;
+        }
+        
     }
 }

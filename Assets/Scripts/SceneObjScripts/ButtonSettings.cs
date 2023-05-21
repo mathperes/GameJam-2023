@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class WorkbenchSettings : MonoBehaviour
+public class ButtonSettings : MonoBehaviour
 {
     private BoxCollider areaEnter;
 
@@ -27,7 +27,7 @@ public class WorkbenchSettings : MonoBehaviour
         {
             Debug.Log("Entrou na area");
             textEnter.gameObject.SetActive(true);
-            textEnter.text = "E para interagir com a bancada";
+            textEnter.text = "E para interagir com o botão";
         }
     }
 

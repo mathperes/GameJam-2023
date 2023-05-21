@@ -16,6 +16,7 @@ public class EnterDomo : MonoBehaviour
     void Start()
     {
         onEnterArea = GetComponent<BoxCollider>();
+        onEnterArea = false;
     }
 
     // Update is called once per frame
@@ -25,20 +26,33 @@ public class EnterDomo : MonoBehaviour
         {
             player.transform.position = new Vector3(-2.5f, 0.6f, 6);
         }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            onEnterArea = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("entrou na area de entrada");
-        textEnter.gameObject.SetActive(true);
-        onEnterArea = true;
-        textEnter.text = "E para entrar";
+        if (other.gameObject)
+        {
+            Debug.Log("entrou na area de entrada");
+            textEnter.gameObject.SetActive(true);
+            onEnterArea = true;
+            textEnter.text = "E para entrar";
+        }
+        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("saiu da area de entrada");
-        textEnter.gameObject.SetActive(false);
-        onEnterArea = false;
+        if (other.gameObject)
+        {
+            Debug.Log("saiu da area de entrada");
+            textEnter.gameObject.SetActive(false);
+            onEnterArea = false;
+        }
+        
     }
 }

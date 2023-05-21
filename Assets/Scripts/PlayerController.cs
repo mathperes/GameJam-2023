@@ -6,9 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRb;
 
+    public SpriteRenderer playerSprit;
+
     public float speedMov = 10.0f;
     public float horizontalInput;
     public float verticalInput;
+
+    public static bool canMove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +23,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerMovement();
+        if (canMove)
+        {
+            PlayerMovement();
+        }
     }
 
     public void PlayerMovement()
@@ -30,9 +37,13 @@ public class PlayerController : MonoBehaviour
         //playerRb.AddForce(Vector3.right * horizontalInput * speedMov);
         //playerRb.AddForce(Vector3.forward * verticalInput * speedMov);
 
-        if (transform.position.y < 0)
+        if (Input.GetKeyDown(KeyCode.A))
         {
-
+            playerSprit.flipX = false;
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            playerSprit.flipX = true;
         }
 
         transform.Translate(Vector3.right * horizontalInput * speedMov * Time.deltaTime);
