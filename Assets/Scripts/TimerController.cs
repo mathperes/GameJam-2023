@@ -133,7 +133,8 @@ public class TimerController : MonoBehaviour
 
         if (timeSleep <= 0)
         {
-            SetEarthSprite(terraSeca);
+            //SetEarthSprite(terraSeca);
+            PlayerController.isLive = false;
         }
     }
 
@@ -145,7 +146,8 @@ public class TimerController : MonoBehaviour
 
         if (timeHungry <= 0)
         {
-            SetEarthSprite(terraSeca);
+            //SetEarthSprite(terraSeca);
+            PlayerController.isLive = false;
         }
     }
 
@@ -163,7 +165,8 @@ public class TimerController : MonoBehaviour
 
         if (timeOxigen <= 0)
         {
-            SetEarthSprite(terraSeca);
+            //SetEarthSprite(terraSeca);
+            PlayerController.isLive = false;
         }
     }
 
@@ -181,6 +184,7 @@ public class TimerController : MonoBehaviour
         if (timeTrash <= 0)
         {
             SetEarthSprite(terraSuja);
+            PlayerController.isLive = false;
         }
     }
 
@@ -198,6 +202,10 @@ public class TimerController : MonoBehaviour
         if (timePlant <= 0)
         {
             SetEarthSprite(terraSeca);
+        }
+        if (timePlant > 0)
+        {
+            SetEarthSprite(terraNormal);
         }
     }
 }

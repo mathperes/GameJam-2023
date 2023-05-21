@@ -6,6 +6,7 @@ using TMPro;
 public class DaysController : MonoBehaviour
 {
     public TextMeshProUGUI textoDias;
+    public TextMeshProUGUI textoMorte;
 
     private float tempoDia = 0;
     public static int diaAtual = 1;
@@ -27,5 +28,6 @@ public class DaysController : MonoBehaviour
         }
 
         textoDias.text = "Dia: " + diaAtual;
+        textoMorte.text = "Você perdeu, Oli sobreviveu por " + diaAtual + " dia(s)";
     }
 }

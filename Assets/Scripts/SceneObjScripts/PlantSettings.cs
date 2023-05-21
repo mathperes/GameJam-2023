@@ -48,7 +48,11 @@ public class PlantSettings : MonoBehaviour
         {
             plantaViva.gameObject.SetActive(false);
             plantaMorta.gameObject.SetActive(true);
-
+        }
+        if (timerControl.timePlant > 0)
+        {
+            plantaViva.gameObject.SetActive(true);
+            plantaMorta.gameObject.SetActive(false);
         }
     }
 

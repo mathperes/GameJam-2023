@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
 
     public SpriteRenderer playerSprit;
     public SpriteRenderer playerSpritFora;
+    public SpriteRenderer playerMorrendo;
+
+    public GameObject gameOverPanel;
 
     public float speedMov = 10.0f;
     public float horizontalInput;
@@ -15,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public static bool canMove = true;
     public static bool onDomo = false;
+    public static bool isLive = true;
 
     // Start is called before the first frame update
     void Start()
@@ -26,22 +30,42 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (canMove)
         {
             PlayerMovement();
         }
-               
 
-        if (onDomo)
+        if (!isLive)
         {
-            playerSprit.gameObject.SetActive(true);
-            playerSpritFora.gameObject.SetActive(false);
+            GameOver();
         }
-        else if (!onDomo)
+
+        if (isLive)
         {
-            playerSprit.gameObject.SetActive(false);
-            playerSpritFora.gameObject.SetActive(true);
+            if (onDomo)
+            {
+                playerSprit.gameObject.SetActive(true);
+                playerSpritFora.gameObject.SetActive(false);
+            }
+            else if (!onDomo)
+            {
+                playerSprit.gameObject.SetActive(false);
+                playerSpritFora.gameObject.SetActive(true);
+            }
         }
+        
+    }
+
+    void GameOver()
+    {
+        canMove = false;
+        gameOverPanel.gameObject.SetActive(true);
+        playerSprit.gameObject.SetActive(false);
+        playerSpritFora.gameObject.SetActive(false);
+        playerMorrendo.gameObject.SetActive(true);
+
+        transform.position = new Vector3(0, 0.6f, -5);
     }
 
     public void PlayerMovement()
@@ -65,9 +89,9 @@ public class PlayerController : MonoBehaviour
 
         if (transform.position.y < -2)
         {
-            transform.position = new Vector3(0,0.6f,0);
+            transform.position = new Vector3(0, 0.6f, 0);
         }
-        
+
         transform.Translate(Vector3.right * horizontalInput * speedMov * Time.deltaTime);
         transform.Translate(Vector3.forward * verticalInput * speedMov * Time.deltaTime);
     }

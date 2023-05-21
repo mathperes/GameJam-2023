@@ -40,7 +40,7 @@ public class BedSettings : MonoBehaviour
 
         if (onBed)
         {
-            timerControl.timeSleep += Time.deltaTime * 2;
+            timerControl.timeSleep += Time.deltaTime * 3;
         }
     }
 

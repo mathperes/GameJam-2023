@@ -8,11 +8,13 @@ public class TrashSettings : MonoBehaviour
     private BoxCollider areaEnter;
     private StatusController statusControl;
     private TimerController timerControl;
+    private AudioSource trashSource;
 
     public TextMeshProUGUI textEnter;
     public SpriteRenderer lixo1;
     public SpriteRenderer lixo2;
     public SpriteRenderer lixo3;
+    public AudioClip trashSound;
 
     public int trashAmount = 0;
     [SerializeField] private bool onArea = false;
@@ -21,6 +23,7 @@ public class TrashSettings : MonoBehaviour
     void Start()
     {
         areaEnter = GetComponent<BoxCollider>();
+        trashSource = GetComponent<AudioSource>();
         statusControl = GameObject.Find("GameManager").GetComponent<StatusController>();
         timerControl = GameObject.Find("GameManager").GetComponent<TimerController>();
     }
@@ -74,6 +77,7 @@ public class TrashSettings : MonoBehaviour
     IEnumerator IncinerateCountdown()
     {
         PlayerController.canMove = false;
+        trashSource.PlayOneShot(trashSound);
         yield return new WaitForSeconds(3);
         Incinerate();
     }
