@@ -40,7 +40,7 @@ public class BedSettings : MonoBehaviour
 
         if (onBed)
         {
-            timerControl.timeSleep += Time.deltaTime * 3;
+            timerControl.timeSleep += Time.deltaTime * 7;
         }
     }
 
@@ -54,7 +54,7 @@ public class BedSettings : MonoBehaviour
     IEnumerator SleepingCountdown()
     {
         onBed = true;
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(5);
         onBed = false;
         Sleeping();
     }

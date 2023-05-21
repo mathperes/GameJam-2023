@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         onDomo = false;
+        canMove = true;
         playerRb = GetComponent<Rigidbody>();
     }
 

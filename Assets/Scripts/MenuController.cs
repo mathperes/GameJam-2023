@@ -32,4 +32,14 @@ public class MenuController : ButtonController
         buttonSource.PlayOneShot(buttonSound);
         gameOb.SetActive(true);
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ResetGame()
+    {
+        PlayerController.isLive = true;
+    }
 }

@@ -53,6 +53,7 @@ public class PedrasSettings : MonoBehaviour
         {
             pedra3.gameObject.SetActive(false);
             SetEarthSprite(timerControl.terra3);
+            PlayerController.isLive = false;
         }
     }
 

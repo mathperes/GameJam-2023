@@ -71,7 +71,7 @@ public class WorkbenchSettings : MonoBehaviour
 
         textEnter.text = "Pronto";
 
-        timerControl.timeHungry += 30;
+        timerControl.timeHungry += 60;
 
         if (timerControl.timeHungry >= timerControl.hungrySlider.maxValue)
         {
